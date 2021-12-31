@@ -1,5 +1,6 @@
 package com.example.filestorage.controller;
 
+import com.example.filestorage.response.Response;
 import com.example.filestorage.service.StorageService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,9 @@ public class StorageController {
     private StorageService service;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam(value = "file") MultipartFile file) {
-        return new ResponseEntity<>(service.uploadFile(file), HttpStatus.OK);
+    public Response uploadFile(@RequestParam(value = "file") MultipartFile file) {
+        String s = service.uploadFile(file);
+        return Response.success().status(200).data(s).build();
     }
 
     @GetMapping("/download/{fileName}")
